@@ -16,7 +16,7 @@ bot = ['z','x','c','v','b','n','m']
 WORD_MIN = 5
 WORD_MAX = 12
 
-# read the files
+# read the files; res/n contains a file containing words of length n.
 byLength = {5:open('res/5').readlines(),
             6:open('res/6').readlines(),
             7:open('res/7').readlines(),
@@ -91,14 +91,16 @@ def randomWords(n,word=0):
         else:
             return randomWord(n)
 
+# randomString() will combine random words with the appropriate length using a recursive algorithm
 def randomString(lengths,word):
     if not word:
         return ''
     if len(word) is not len(lengths):
-        return "Lengths mismatch"
+        return "Lengths mismatch. Please revise your parameters."
     else:
         return randomWord(int(lengths[0]),word[0]) + " " + randomString(lengths[1:],word[1:])
 
+# query() finds a word of length. If char is non-zero, it will find a string starting with char.
 def query(length,char=0):
     if length > WORD_MAX or length < WORD_MIN:
         return "Lengths range from " + str(WORD_MIN) + " to " + str(WORD_MAX)
@@ -117,6 +119,7 @@ def printHelp():
     sys.exit()
 
 # main prints output based on given parameters.
+# TODO: Clean up main, use a library to process command line parameters
 def main():
     numargs = len(sys.argv)-1
     arglist = sys.argv[1:]
